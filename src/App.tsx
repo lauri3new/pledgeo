@@ -26,14 +26,16 @@ function App() {
     <Container>
       <Row style={{ textAlign: 'center', padding: 50 }}>
         <Col>
-        <h1 style={{ fontSize: 80, fontWeight: 'bold'}}>Pledgeo 🌍</h1>
+        <h1 style={{ fontSize: 80, fontWeight: 'bold', lineHeight: 1.2}}>Pledgeo 🌍</h1>
         </Col>
       </Row>
       <Row>
         <Col lg={4}>
         <Card>
       <CardHeader>Card header</CardHeader>
-      <CardImg src="https://wbg.org.uk/wp-content/uploads/2020/04/Oxfam-Logo.jpg" />
+      <CardImg src="https://wbg.org.uk/wp-content/uploads/2020/04/Oxfam-Logo.jpg" style={{
+        maxHeight: 250
+      }} />
       <CardBody>
         <CardTitle>Oxfam</CardTitle>
         <p>To prevent and relieve poverty and to protect the vulnerable, including through humanitarian intervention; . To advance sustainable development; To promote human rights and equality and diversity, in particular where to do so contributes to the prevention and relief of poverty;</p>
