@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router';
 import {
   Card,
@@ -68,9 +69,9 @@ export const OrgCard = ({
       <CardFooter>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <Button
+          style={{ width: 95 }}
           disabled={loading}
           onClick={() => {
-            setLoading(true)
             pClient.post('donation-sessions', {
               organisationId: "staging_organisation_000000C6pZ3jKMdNUr0hMtgoYuDnf",
               successUrl: `${window.location.origin}/org/${id}`
@@ -81,8 +82,12 @@ export const OrgCard = ({
             .catch(e => {
               console.log(e)
             })
+            setLoading(true)
           }}
-        >Donate</Button>
+        >{ loading ? <Spinner style={{
+          width: '1rem',
+          height: '1rem'
+        }} animation="border" role="status"/> : "Donate" }</Button>
         <Button
           theme="light"
           onClick={() => {
