@@ -1,13 +1,16 @@
 import * as functions from "firebase-functions"
+import fireAdmin from "firebase-admin"
 import axios from "axios"
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
 
+const admin = fireAdmin.initializeApp()
+
 const pbpClient = axios.create({
   baseURL: "http://staging-api.poweredbypercent.com/v1/",
   headers: {
-    authorization: functions.config().pbp.sk
+    authorization: functions.config().pbp.stagingsk
   }
 })
 
@@ -33,8 +36,10 @@ app.post("/donation-sessions", async (request, response) => {
     })
   }
   try {
+    const { successUrl } = request.body
     const { data } = await pbpClient.post("donation-sessions", {
-      organisationId: request.body.organisationId
+      organisationId: request.body.organisationId,
+      ...successUrl && { successUrl }
     })
     functions.logger.info("donationSession:data", {
       data
@@ -50,6 +55,22 @@ app.post("/donation-sessions", async (request, response) => {
   }
 })
 
+app.post("/webhook-handler", async (req, res) => {
+  try {
+    const {
+      id, firstName, amount, currencyCode, metadata, createdAt, organisationId
+    } = req.body.data.eventData
+    await admin.firestore().collection("donations").doc(id).set({
+      id, firstName, amount, currencyCode, metadata, createdAt, organisationId
+    })
+  } catch (e) {
+    functions.logger.error("webhook-handler:error", e)
+    res.status(400).send({
+      error: "bad request"
+    })
+  }
+})
+
 app.use((req, res) => {
   functions.logger.info("notfound:error", req.path)
   res.status(404).send({
@@ -58,4 +79,6 @@ app.use((req, res) => {
 })
 
 export const api = functions.https.onRequest(app)
+
+export const sandboxapi = functions.https.onRequest(app)
 
