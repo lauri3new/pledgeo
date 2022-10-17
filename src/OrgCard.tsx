@@ -78,17 +78,19 @@ export const OrgCard = ({
           style={{ width: 95 }}
           disabled={loading}
           onClick={() => {
+            setLoading(true)
             pClient.post('donation-sessions', {
               organisationId: id,
               successUrl: `${window.location.origin}/org/${id}`
             })
             .then(({ data }) => {
+              setLoading(false)
               window.location = data.data.url
             })
             .catch(e => {
+              setLoading(false)
               console.log(e)
             })
-            setLoading(true)
           }}
         >{ loading ? <Spinner style={{
           width: '1rem',

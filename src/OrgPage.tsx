@@ -8,6 +8,7 @@ import { Donations } from "./Donations"
 
 export const OrgPage = () => {
   const [loading, setLoading] = useState(false)
+  const [loadingDonate, setLoadingDonate] = useState(false)
   const { id } = useParams<{ id: string }>()
 
   const [data, setData] = useState<any>([])
@@ -54,18 +55,23 @@ export const OrgPage = () => {
         <Button
           disabled={loading}
           onClick={() => {
-            setLoading(true)
+            setLoadingDonate(true)
             pClient.post('donation-sessions', {
               organisationId: id
             })
             .then(({ data }) => {
+              setLoadingDonate(false)
               window.location = data.data.url
             })
             .catch(e => {
+              setLoadingDonate(false)
               console.log(e)
             })
           }}
-        >Donate</Button>
+        >{ loadingDonate ? <Spinner style={{
+          width: '1rem',
+          height: '1rem'
+        }} animation="border" role="status"/> : "Donate" }</Button>
       </Col>
     </Row>
     <Row>
