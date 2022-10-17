@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions"
 import fireAdmin from "firebase-admin"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
@@ -42,12 +42,15 @@ app.post("/donation-sessions", async (request, response) => {
       ...successUrl && { successUrl }
     })
     functions.logger.info("donationSession:data", {
-      data
+      data,
+      baseURL: functions.config().pbp.baseurl,
+      authorization: functions.config().pbp.sk
     })
     response.send(data)
-  } catch (e) {
+  } catch (err) {
     functions.logger.error("donationSession:catch", {
-      err: e
+      err,
+      responseData: (err as AxiosError).response?.data
     })
     response.status(500).send({
       error: "something went wrong"
