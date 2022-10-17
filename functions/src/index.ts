@@ -8,9 +8,9 @@ import bodyParser from "body-parser"
 const admin = fireAdmin.initializeApp()
 
 const pbpClient = axios.create({
-  baseURL: "http://staging-api.poweredbypercent.com/v1/",
+  baseURL: functions.config().pbp.baseurl,
   headers: {
-    authorization: functions.config().pbp.stagingsk
+    authorization: functions.config().pbp.sk
   }
 })
 
@@ -79,6 +79,4 @@ app.use((req, res) => {
 })
 
 export const api = functions.https.onRequest(app)
-
-export const sandboxapi = functions.https.onRequest(app)
 

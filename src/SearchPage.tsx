@@ -81,7 +81,7 @@ export const SearchPage = () => {
         description="To prevent and relieve poverty and to protect the vulnerable, including through humanitarian intervention; . To advance sustainable development; To promote human rights and equality and diversity, in particular where to do so contributes to the prevention and relief of poverty;"
         countryCode="GBR"
         address="2700 John Smith Drive"
-        id="staging_organisation_000000C6pZ3jKMdNUr0hMtgoYuDnf"
+        id={process.env.EXAMPLE_ID!}
       />
       </Col>
         {data.map(a => (<Col style={{ marginBottom: 40 }} sm={6} md={4}>

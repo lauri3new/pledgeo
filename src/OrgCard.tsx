@@ -47,7 +47,12 @@ export const OrgCard = ({
       <CardImg src={logo || "https://source.unsplash.com/random/500×400/?nonprofit"} style={{
         height: 250,
         objectFit: 'cover'
-      }} />
+      }}
+      onClick={() => {
+        push(`/org/${id}`)
+        window.scrollTo(0, 0)
+      }}
+      />
       <CardBody style={{
         textOverflow: 'ellipsis',
         WebkitLineClamp: 3,
@@ -73,7 +78,7 @@ export const OrgCard = ({
           disabled={loading}
           onClick={() => {
             pClient.post('donation-sessions', {
-              organisationId: "staging_organisation_000000C6pZ3jKMdNUr0hMtgoYuDnf",
+              organisationId: id,
               successUrl: `${window.location.origin}/org/${id}`
             })
             .then(({ data }) => {
