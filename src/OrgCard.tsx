@@ -44,9 +44,10 @@ export const OrgCard = ({
         whiteSpace: 'nowrap',
         overflow: 'hidden'
       }}>{name}</CardHeader>
-      <CardImg src={logo || "https://source.unsplash.com/random/500×400/?nonprofit"} style={{
+      <CardImg src={logo || "https://source.unsplash.com/random/" +(500 - (Math.random() * 100)).toString() + "x400/?nonprofit,charity,recyclable"} style={{
         height: 250,
-        objectFit: 'cover'
+        objectFit: 'cover',
+        cursor: 'pointer'
       }}
       onClick={() => {
         push(`/org/${id}`)
