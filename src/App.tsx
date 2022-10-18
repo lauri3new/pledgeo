@@ -23,6 +23,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 function App() {
   
   return <Router>
+    <div style={{ minHeight: '90vh' }}>
     <div style={{
       height: 30, 
       backgroundColor: 'blue',
@@ -39,6 +40,7 @@ function App() {
     <Route path="/org/:id" component={() =><OrgPage/>} />
     <Route path="*" component={() => <SearchPage/>} />
   </Switch>
+  </div>
   <Container>
   <Row style={{ height: 200 }}>
         <Col>

@@ -39,6 +39,7 @@ app.post("/donation-sessions", async (request, response) => {
     const { successUrl } = request.body
     const { data } = await pbpClient.post("donation-sessions", {
       organisationId: request.body.organisationId,
+      language: "en-GB",
       ...successUrl && { successUrl }
     })
     functions.logger.info("donationSession:data", {

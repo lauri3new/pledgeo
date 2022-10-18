@@ -24,8 +24,7 @@ export const Donations = ({ id }: { id: string }) => {
 
   if (loading) {
     return (<div style={{
-      width: '100%',
-      marginLeft: '50%'
+      width: '100%'
     }}><Spinner animation="border" role="status"/></div>)
   }
   

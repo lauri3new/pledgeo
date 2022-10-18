@@ -5,6 +5,7 @@ import { Button, Col, Container, Row } from "shards-react"
 import { pbpClient } from "./capabilities/pbpClient"
 import { pClient } from "./capabilities/pClient"
 import { Donations } from "./Donations"
+import { Img } from "./Img"
 
 export const OrgPage = () => {
   const [loading, setLoading] = useState(false)
@@ -26,6 +27,9 @@ export const OrgPage = () => {
       }
     }
     x()
+    return () => {
+      setLoadingDonate(false)
+    }
   }, [])
 
   if (loading) {
@@ -39,8 +43,10 @@ export const OrgPage = () => {
     <Container>
     <Row>
     <Col md={4} sm={12}>
-        <img src={data.logo || "https://source.unsplash.com/random/" +(500 - (Math.random() * 100)).toString() + "x400/?nonprofit"} style={{
-          maxWidth: '100%'
+        <Img src={data.logo || "https://source.unsplash.com/random/" +(500 - (Math.random() * 100)).toString() + "x400/?nonprofit"} styles={{
+          height: 350,
+          width: 350,
+          objectFit: 'cover'
         }} />
       </Col>
       <Col md={8} sm={12}>
@@ -60,7 +66,6 @@ export const OrgPage = () => {
               organisationId: id
             })
             .then(({ data }) => {
-              setLoadingDonate(false)
               window.location = data.data.url
             })
             .catch(e => {

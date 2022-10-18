@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router';
 import {
@@ -14,6 +14,7 @@ import {
   Col
 } from "shards-react";
 import { pClient } from './capabilities/pClient';
+import { Img } from './Img';
 
 type OrgCardProps = {
   name: string
@@ -35,6 +36,11 @@ export const OrgCard = ({
   const [loading, setLoading] = useState(false)
   const { push } = useHistory()
   const x = useLocation()
+  useEffect(() => {
+    return () => {
+      setLoading(false)
+    }
+  }, [])
   return (
   <Card style={{
     height: '500px'
@@ -44,11 +50,12 @@ export const OrgCard = ({
         whiteSpace: 'nowrap',
         overflow: 'hidden'
       }}>{name}</CardHeader>
-      <CardImg src={logo || "https://source.unsplash.com/random/" +(500 - (Math.random() * 100)).toString() + "x400/?nonprofit,charity,recyclable"} style={{
-        height: 250,
-        objectFit: 'cover',
-        cursor: 'pointer'
-      }}
+              <Img src={logo || "https://source.unsplash.com/random/" +(500 - (Math.random() * 100)).toString() + "x400/?nonprofit"} styles={{
+          height: 250,
+          width: '100%',
+          cursor: 'pointer',
+          objectFit: 'cover'
+        }}
       onClick={() => {
         push(`/org/${id}`)
         window.scrollTo(0, 0)
@@ -84,7 +91,6 @@ export const OrgCard = ({
               successUrl: `${window.location.origin}/org/${id}`
             })
             .then(({ data }) => {
-              setLoading(false)
               window.location = data.data.url
             })
             .catch(e => {
