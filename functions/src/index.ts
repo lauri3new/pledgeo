@@ -62,10 +62,10 @@ app.post("/donation-sessions", async (request, response) => {
 app.post("/webhook-handler", async (req, res) => {
   try {
     const {
-      id, firstName, amount, currencyCode, metadata, createdAt, organisationId
+      id, firstName, amount, currencyCode, metadata, createdAt, organisationId, anonymous
     } = req.body.data.eventData
     await admin.firestore().collection("donations").doc(id).set({
-      id, firstName, amount, currencyCode, metadata, createdAt, organisationId
+      id, firstName, amount, currencyCode, metadata, createdAt, organisationId, anonymous
     })
   } catch (e) {
     functions.logger.error("webhook-handler:error", e)
