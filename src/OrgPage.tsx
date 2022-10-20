@@ -63,7 +63,8 @@ export const OrgPage = () => {
           onClick={() => {
             setLoadingDonate(true)
             pClient.post('donation-sessions', {
-              organisationId: id
+              organisationId: id,
+              successUrl: `${window.location.origin}/org/${id}`
             })
             .then(({ data }) => {
               window.location.href = data.data.url
