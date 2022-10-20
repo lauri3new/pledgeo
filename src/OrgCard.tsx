@@ -91,7 +91,8 @@ export const OrgCard = ({
               successUrl: `${window.location.origin}/org/${id}`
             })
             .then(({ data }) => {
-              window.location = data.data.url
+              window.location.href = data.data.url
+              setLoading(false)
             })
             .catch(e => {
               setLoading(false)

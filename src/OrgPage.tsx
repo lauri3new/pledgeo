@@ -66,7 +66,8 @@ export const OrgPage = () => {
               organisationId: id
             })
             .then(({ data }) => {
-              window.location = data.data.url
+              window.location.href = data.data.url
+              setLoadingDonate(false)
             })
             .catch(e => {
               setLoadingDonate(false)
