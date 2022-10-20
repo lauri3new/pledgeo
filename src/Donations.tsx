@@ -40,7 +40,7 @@ export const Donations = ({ id }: { id: string }) => {
       {data.map(({ amount, currencyCode, firstName, createdAt, anonymous }) => {
         return (
           <tr>
-          <td>{anonymous === 'no' ? 'Anonymous' : firstName}</td>
+          <td>{anonymous === 'yes' ? 'Anonymous' : firstName}</td>
           <td>{Dinero({ currency: currencyCode, amount }).toFormat()}</td>
           <td>{new Date(createdAt).toLocaleString()}</td>
         </tr>
