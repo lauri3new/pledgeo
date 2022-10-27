@@ -88,7 +88,10 @@ export const OrgCard = ({
             setLoading(true)
             pClient.post('donation-sessions', {
               organisationId: id,
-              successUrl: `${window.location.origin}/org/${id}`
+              successUrl: `${window.location.origin}/org/${id}`,
+              metadata: {
+                test: 'this is some test metadata'
+              }
             })
             .then(({ data }) => {
               window.location.href = data.data.url
