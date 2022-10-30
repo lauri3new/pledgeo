@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IoEarth } from 'react-icons/io5'
 import {
   Card,
   CardHeader,
@@ -45,7 +46,13 @@ function App() {
   <Row style={{ height: 200 }}>
         <Col>
           <hr style={{ marginTop: 80, paddingBottom: 20 }}/>
-          <p>Pledgeo&nbsp;&nbsp;&nbsp;<strong>2022</strong></p>
+          <p style={{ fontWeight: '600' }}>    <span style={{color: '#535353'}}>P</span>
+    <span style={{color: '#535353'}}>l</span>
+    <span style={{color: '#535353'}}>e</span>
+    <span style={{color: '#535353'}}>d</span>
+    <span style={{color: 'rgb(174 70 70)'}}>g</span>
+    <span style={{color: 'rgb(65 138 22)'}}>e</span>
+    <span style={{color: 'rgb(91 91 255)'}}>o</span><IoEarth style={{ color: '#535353' }} />&nbsp;&nbsp;&nbsp;<strong>2022</strong></p>
         </Col>
       </Row>
       </Container>

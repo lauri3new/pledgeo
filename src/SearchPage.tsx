@@ -12,6 +12,7 @@ import {
   Col,
   Button
 } from "shards-react";
+import { isMobile } from 'react-device-detect'
 import { pbpClient } from './capabilities/pbpClient';
 import { pClient } from './capabilities/pClient';
 import { OrgCard } from './OrgCard';
@@ -87,7 +88,10 @@ export const SearchPage = () => {
               borderBottomRightRadius: 0
             }
           }}
-          style={{
+          style={ isMobile ? {
+            flex: 'auto',
+            fontSize: 16
+          }: {
             flex: 'auto'
           }}
           filterBy={() => true}
@@ -99,7 +103,7 @@ export const SearchPage = () => {
             search(e)
           }}
           options={searchData}
-          placeholder="Search by nonprofit name or number"
+          placeholder={isMobile ? "Search nonprofit name" : "Search by nonprofit name or number"}
           renderMenuItemChildren={(option: any) => (
             <div
             key={option.id}
