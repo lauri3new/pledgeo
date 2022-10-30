@@ -26,12 +26,12 @@ function App() {
     <div style={{ minHeight: '90vh' }}>
     <div style={{
       height: 30, 
-      backgroundColor: 'blue',
+      backgroundColor: 'green',
       color: 'white',
       textAlign: 'center',
       position: 'fixed',
       width: '100vw',
-      opacity: '0.8',
+      opacity: '0.6',
       fontWeight: 'bold',
       zIndex: 10000
     }}>{process.env.REACT_APP_ENVIRONMENT?.toUpperCase()}</div>

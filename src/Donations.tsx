@@ -30,6 +30,7 @@ export const Donations = ({ id }: { id: string }) => {
   
   return (
     <>
+    <hr style={{ marginTop: 40, paddingBottom: 20 }}/>
       <h3>Donation timeline</h3>
       <table style={{ width: "100%" }}>
       <tr>

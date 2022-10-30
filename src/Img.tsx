@@ -9,5 +9,5 @@ export const Img = ({ src, styles, onClick = () => {} }: { src: string, styles: 
       setImage(src)
     }
   }, [])
-  return <div style={{ backgroundColor: 'rgb(242, 242, 242)', ...styles }}>{image && <img onClick={onClick} className='fadeIn' src={image} style={{ backgroundColor: 'lightgrey', ...styles }} />}</div>
+  return <div style={{ backgroundColor: 'rgb(242, 242, 242)', ...styles }}>{image && <img onClick={onClick} className='fadeIn' src={image} style={{ backgroundColor: 'rgb(240,240,240)', ...styles }} />}</div>
 }

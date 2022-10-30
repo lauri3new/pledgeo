@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { Spinner } from "react-bootstrap"
 import { useParams } from "react-router"
+import { isMobile } from 'react-device-detect'
 import { Button, Col, Container, Row } from "shards-react"
 import { pbpClient } from "./capabilities/pbpClient"
 import { pClient } from "./capabilities/pClient"
 import { Donations } from "./Donations"
 import { Img } from "./Img"
+import { OrgName } from "./OrgName"
+
 
 export const OrgPage = () => {
   const [loading, setLoading] = useState(false)
@@ -42,12 +45,16 @@ export const OrgPage = () => {
   return (
     <Container>
     <Row>
-    <Col md={4} sm={12}>
+    <Col md={4} sm={12} style={ isMobile ? { marginTop: 20 } : {}}>
+      {!data.logo ? <OrgName
+        name={data.name || ''}
+        onClick={() => {}}
+      /> :
         <Img src={data.logo || "https://source.unsplash.com/random/" +(500 - (Math.random() * 100)).toString() + "x400/?nonprofit"} styles={{
           height: 350,
           width: 350,
-          objectFit: 'cover'
-        }} />
+          objectFit: 'contain'
+        }} />}
       </Col>
       <Col md={8} sm={12}>
         <h1 style={{
@@ -59,6 +66,8 @@ export const OrgPage = () => {
         <h3>Mission</h3>
         <p>{data.description}</p>
         <Button
+          style={isMobile ? { width: '100%', fontWeight: 'bold' } : { width: 200, fontWeight: 'bold' }}
+          theme="success"
           disabled={loading}
           onClick={() => {
             setLoadingDonate(true)
