@@ -54,3 +54,16 @@
 .form-control:focus {
   border-color: #17c671 !important;
 } 
+
+.visually-hidden {
+  display: none;
+}
+
+.page-link {
+  color: #17c671 !important;
+}
+
+.page-item.disabled .page-link {
+  color: grey !important;
+  background-color: rgb(250,250,250) !important;
+}

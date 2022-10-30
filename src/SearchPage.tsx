@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, InputGroup, Spinner } from 'react-bootstrap';
+import { Form, InputGroup, Pagination, Spinner } from 'react-bootstrap';
 import {
   Card,
   CardHeader,
@@ -14,15 +14,22 @@ import {
 } from "shards-react";
 import { isMobile } from 'react-device-detect'
 import { pbpClient } from './capabilities/pbpClient';
-import { pClient } from './capabilities/pClient';
+import axios from 'axios';
 import { OrgCard } from './OrgCard';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead'
 import { useHistory } from 'react-router';
 import { Img } from './Img';
 import { OrgName } from './OrgName';
 
-const searchOrganisations = async (value: string, pageSize = 25) => {
-  const { data } = await pbpClient.get('organisations',
+const searchOrganisations = async (value: string, pageSize = 25, url?: string) => {
+  const { data } = await (url ? axios.get(
+    url,
+    {
+      headers: {
+      authorization: process.env.REACT_APP_PBP_PK
+    }
+  }
+  ) : pbpClient.get('organisations',
   {
    params: {
       pageSize,
@@ -30,8 +37,8 @@ const searchOrganisations = async (value: string, pageSize = 25) => {
         query: value
       }
     }
-  })
-  return data.data
+  }))
+  return data
 }
 
 export const SearchPage = () => {
@@ -44,7 +51,7 @@ export const SearchPage = () => {
   const search = async (value: string) => {
     try {
       setSearchLoading(true)
-    const data = await searchOrganisations(value, 5)
+    const { data } = await searchOrganisations(value, 5)
     setSearchData(data)
     setSearchLoading(false)
     } catch (e) {
@@ -54,13 +61,19 @@ export const SearchPage = () => {
   }
 
   const [data, setData] = useState<any[]>([])
+  const [pagination, setPagination] = useState<any>({})
   const [loading, setLoading] = useState<boolean>(true)
   const [value, setValue] = useState('')
-  const x = async (value: string) => {
+  const [results, setResults] = useState()
+  const [accurate, setAccurate] = useState(false)
+  const x = async (value: string, url?: string) => {
     try {
     setLoading(true)
-    const data = await searchOrganisations(value)
+    const { data, _links, totalResults, exhaustiveTotalResults } = await searchOrganisations(value, 25, url)
+    setAccurate(exhaustiveTotalResults)
+    setPagination(_links)
     setData(data)
+    setResults(totalResults)
     setLoading(false)
     } catch (e) {
     setLoading(false)
@@ -82,6 +95,7 @@ export const SearchPage = () => {
         }}>
         <InputGroup className="mb-3">
         <AsyncTypeahead
+          // onInputChange={(e) => setValue(e)}
           inputProps={{
             style: {
               borderTopRightRadius: 0,
@@ -98,10 +112,17 @@ export const SearchPage = () => {
           id="async-example"
           isLoading={false}
           labelKey="name"
-          minLength={3}
+          minLength={1}
           onSearch={(e) => {
+            setValue(e)
             search(e)
           }}
+          onKeyDown={(e) => {
+            if (e.keyCode === 13) {
+              x(value)
+            }
+          }
+          }
           options={searchData}
           placeholder={isMobile ? "Search nonprofit name" : "Search by nonprofit name or number"}
           renderMenuItemChildren={(option: any) => (
@@ -150,7 +171,7 @@ export const SearchPage = () => {
           borderLeft: 0,
           fontWeight: 'bold'
         }}
-        // onClick={() => x()}
+        onClick={() => x(value)}
         >
           Search
         </Button>
@@ -178,6 +199,41 @@ export const SearchPage = () => {
           <OrgCard {...a}  />
         </Col>))}
         </>}
+      </Row>
+      <Row>
+        <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          width: '100%'
+        }}>
+          {pagination.last && pagination.prev && !pagination.next ?
+          <p style={{ fontSize: 15 }}>End of results</p>
+          :<p style={{ fontSize: 15 }}>{accurate ? '' : 'at least'} {results} results</p>
+}
+        {!(pagination.last && pagination.prev && !pagination.next) && <Pagination style={{
+          fontSize: '25px',
+          display: 'flex'
+        }}>
+          {pagination.next && pagination.first && <Pagination.First
+            disabled={!pagination.prev}
+            onClick={() => x(value, pagination.first)}
+          />}
+          {pagination.prev && <Pagination.Prev
+            onClick={() => x(value, pagination.prev)}
+          />}
+          {pagination.next && <Pagination.Next
+            onClick={() => x(value, pagination.next)}
+          />}
+          {(pagination.prev || pagination.next) && pagination.last && <Pagination.Last
+            disabled={!pagination.next}
+            onClick={() => x(value, pagination.last)}
+          />}
+        </Pagination>
+}
+        </div>
       </Row>
     </Container>
   )
