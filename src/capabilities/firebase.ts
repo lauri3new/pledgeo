@@ -20,7 +20,21 @@ const sandboxFirebaseConfig = {
   measurementId: "G-7224L3TC9P"
 };
 
-const app = firebase.initializeApp(process.env.REACT_APP_ENVIRONMENT === 'staging' ? stagingFirebaseConfig : sandboxFirebaseConfig)
+const prodFirebaseConfig = {
+  apiKey: "AIzaSyCh_dJqYiMZxKVRBebwTgQTvOD3MFq95_c",
+  authDomain: "pledgeoprod.firebaseapp.com",
+  projectId: "pledgeoprod",
+  storageBucket: "pledgeoprod.appspot.com",
+  messagingSenderId: "352930725657",
+  appId: "1:352930725657:web:0e1e89d3fdde4edbeb0f88",
+  measurementId: "G-13JK54TWZG"
+}
+
+const app = firebase.initializeApp(process.env.REACT_APP_ENVIRONMENT === 'staging'
+  ? stagingFirebaseConfig :
+  process.env.REACT_APP_ENVIRONMENT === 'sandbox'
+  ? sandboxFirebaseConfig :
+  prodFirebaseConfig)
 
 firebase.firestore().enablePersistence()
 

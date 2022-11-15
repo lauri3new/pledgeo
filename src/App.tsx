@@ -25,7 +25,7 @@ function App() {
   
   return <Router>
     <div style={{ minHeight: '90vh' }}>
-    <div style={{
+    {process.env.REACT_APP_ENVIRONMENT !== 'production' && <div style={{
       height: 30, 
       backgroundColor: 'green',
       color: 'white',
@@ -35,7 +35,7 @@ function App() {
       opacity: '0.6',
       fontWeight: 'bold',
       zIndex: 10000
-    }}>{process.env.REACT_APP_ENVIRONMENT?.toUpperCase()}</div>
+    }}>{process.env.REACT_APP_ENVIRONMENT?.toUpperCase()}</div>}
   <Logo/>
   <Switch>
     <Route path="/org/:id" component={() =><OrgPage/>} />

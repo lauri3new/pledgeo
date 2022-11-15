@@ -35,6 +35,9 @@ const searchOrganisations = async (value: string, pageSize = 25, url?: string) =
       pageSize,
       ...value && {
         query: value
+      },
+      ...process.env.REACT_APP_ENVIRONMENT === 'production' && {
+        category: ["category_000000CUpmzeSdAYRMEHaVUlWKPCq"]
       }
     }
   }))
@@ -185,7 +188,7 @@ export const SearchPage = () => {
           marginLeft: '50%'
         }}><Spinner animation="border" role="status"/></div> :
         <>
-      <Col style={{ marginBottom: 40 }} sm={6} md={4}>
+      {process.env.REACT_APP_EXAMPLE_ID && <Col style={{ marginBottom: 40 }} sm={6} md={4}>
       <OrgCard
         logo="https://wbg.org.uk/wp-content/uploads/2020/04/Oxfam-Logo.jpg"
         name="PROMOTED CHARITY: oxfam"
@@ -194,7 +197,7 @@ export const SearchPage = () => {
         address="2700 John Smith Drive"
         id={process.env.REACT_APP_EXAMPLE_ID!}
       />
-      </Col>
+      </Col>}
         {data.map(a => (<Col style={{ marginBottom: 40 }} sm={6} md={4}>
           <OrgCard {...a}  />
         </Col>))}

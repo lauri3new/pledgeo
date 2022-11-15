@@ -28,12 +28,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_ENVIRONMENT='staging' REACT_APP_PBP_PK='staging_pk_e0f4b2b2-6d67-43e1-8e6d-92e7db1d2ad5' REACT_APP_PBP_BASE_URL='https://staging-api.poweredbypercent.com/v1/' REACT_APP_EXAMPLE_ID='staging_organisation_000000C6pZ3jKMdNUr0hMtgoYuDnf' react-scripts start",
+    "start": "REACT_APP_ENVIRONMENT='production' REACT_APP_PBP_PK='pk_6e197a21-8315-48f7-8519-67805b96e548' REACT_APP_PBP_BASE_URL='https://api.poweredbypercent.com/v1/' REACT_APP_EXAMPLE_ID='' react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy:staging": "REACT_APP_ENVIRONMENT='staging' REACT_APP_PBP_PK='staging_pk_e0f4b2b2-6d67-43e1-8e6d-92e7db1d2ad5' REACT_APP_PBP_BASE_URL='https://staging-api.poweredbypercent.com/v1/' REACT_APP_EXAMPLE_ID='staging_organisation_000000C6pZ3jKMdNUr0hMtgoYuDnf' REACT_APP_PBP_PLEDGE_URL='https://us-central1-pledgeo.cloudfunctions.net/api/' npm run build && firebase use pledgeo && firebase deploy",
-    "deploy:sandbox": "REACT_APP_ENVIRONMENT='sandbox' REACT_APP_PBP_PK='sandbox_pk_b31d7473-732c-4655-8239-cb8d37548e29' REACT_APP_PBP_BASE_URL='https://sandbox-api.poweredbypercent.com/v1/' REACT_APP_EXAMPLE_ID='sandbox_organisation_000000CAtPaOedDuZm5kfI32j8yXI' REACT_APP_PBP_PLEDGE_URL='https://us-central1-pledgeosandbox.cloudfunctions.net/api/' npm run build && firebase use pledgeosandbox && firebase deploy"
+    "deploy:sandbox": "REACT_APP_ENVIRONMENT='sandbox' REACT_APP_PBP_PK='sandbox_pk_b31d7473-732c-4655-8239-cb8d37548e29' REACT_APP_PBP_BASE_URL='https://sandbox-api.poweredbypercent.com/v1/' REACT_APP_EXAMPLE_ID='' REACT_APP_PBP_PLEDGE_URL='https://us-central1-pledgeosandbox.cloudfunctions.net/api/' npm run build && firebase use pledgeosandbox && firebase deploy",
+    "deploy:production": "REACT_APP_ENVIRONMENT='production' REACT_APP_PBP_PK='pk_6e197a21-8315-48f7-8519-67805b96e548' REACT_APP_PBP_BASE_URL='https://api.poweredbypercent.com/v1/' REACT_APP_EXAMPLE_ID='' REACT_APP_PBP_PLEDGE_URL='https://us-central1-pledgeoprod.cloudfunctions.net/api/' npm run build && firebase use pledgeoprod && firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": [
